@@ -1,0 +1,1 @@
+Build agent "{{ regexReplaceAll "\\W+" .Release.Name " " | title }}" added to {{ .Release.Namespace }} and available on {{ .Values.agent.organisationUrl }}

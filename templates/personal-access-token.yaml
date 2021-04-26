@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Release.Name }}-pat
+  namespace: build-agents
+type: Opaque
+data:
+  pat: {{ $.Values.personalAccessToken | b64enc }}

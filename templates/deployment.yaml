@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: build-agents
+  labels:
+    app: linux-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: linux-agent
+  template:
+    metadata:
+      labels:
+        app: linux-agent
+    spec:
+      {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+      containers:
+      - name: linux-agent
+        image: jabbermouth/ads-linux-agent:latest
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: docker-sock
+        env:
+          - name: AZP_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-pat
+                key: pat
+          - name: AZP_URL
+            value: {{ .Values.agent.organisationUrl }}
+          - name: AZP_AGENT_NAME
+            value: {{ regexReplaceAll "\\W+" .Release.Name " " | title }}
+          - name: AZP_POOL
+            value: {{ .Values.agent.pool }}
+          - name: AZP_WORK
+            value: "_work"
+      nodeSelector:
+        kubernetes.io/os: linux

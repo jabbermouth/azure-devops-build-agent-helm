@@ -1,0 +1,9 @@
+image:
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
+personalAccessToken: ""
+
+agent:
+  organisationUrl: ""
+  pool: ""
