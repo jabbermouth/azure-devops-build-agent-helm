@@ -28,7 +28,7 @@ spec:
             type: Socket
       containers:
       - name: linux-agent
-        image: jabbermouth/ads-linux-agent:latest
+        image: jabbermouth/ads-linux-agent:v1.0.1
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         volumeMounts:
           - mountPath: /var/run/docker.sock
