@@ -21,18 +21,22 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
+      {{- if .Values.agent.dockerNodes }}
       volumes:
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock
             type: Socket
+      {{- end }}
       containers:
       - name: linux-agent
-        image: jabbermouth/ads-linux-agent:v1.0.2
+        image: jabbermouth/ads-linux-agent:v1.0.3
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.agent.dockerNodes }}
         volumeMounts:
           - mountPath: /var/run/docker.sock
             name: docker-sock
+        {{- end }}
         env:
           - name: AZP_TOKEN
             valueFrom:

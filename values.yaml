@@ -7,3 +7,4 @@ personalAccessToken: ""
 agent:
   organisationUrl: ""
   pool: ""
+  dockerNodes: true
