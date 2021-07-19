@@ -29,7 +29,7 @@ spec:
             path: /var/run/docker.sock
             type: Socket
         {{- end }}
-        {{- if .Values.agent.kaniko.enabled -}}
+        {{- if .Values.agent.kaniko.enabled }}
         - name: kaniko
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-kaniko
@@ -45,8 +45,8 @@ spec:
           - mountPath: /var/run/docker.sock
             name: docker-sock
           {{- end }}
-          {{- if .Values.agent.kaniko.enabled -}}
-          - mounthPath: /kaniko
+          {{- if .Values.agent.kaniko.enabled }}
+          - mountPath: /kaniko
             name: kaniko
           {{- end }}
         {{- end }}
