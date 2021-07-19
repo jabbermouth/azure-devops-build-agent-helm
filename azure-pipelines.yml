@@ -1,0 +1,13 @@
+trigger:
+  - development
+  - release/*
+      
+resources:
+  repositories:
+    - repository: self
+    - repository: deployments
+      type: git
+      name: Jabbermouth.Kubernetes.Deployment.2021
+
+stages:
+- template: helm-chart.yaml@deployments
