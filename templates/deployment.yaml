@@ -21,7 +21,7 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
-      {{- if .Values.agent.dockerNodes }}
+      {{- if or .Values.agent.dockerNodes .Values.agent.kaniko.enabled }}
       volumes:
         {{- if .Values.agent.dockerNodes }}
         - name: docker-sock
