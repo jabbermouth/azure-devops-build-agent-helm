@@ -1,0 +1,16 @@
+{{- if .Values.agent.kaniko.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-kaniko
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.agent.kaniko.storageClass }}
+  labels:
+    app: {{ .Release.Name }}-kaniko
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.agent.kaniko.size }}
+{{- end }}

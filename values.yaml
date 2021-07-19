@@ -8,3 +8,7 @@ agent:
   organisationUrl: ""
   pool: ""
   dockerNodes: true
+  kaniko:
+    enabled: false
+    storageClass: longhorn
+    size: 5Gi

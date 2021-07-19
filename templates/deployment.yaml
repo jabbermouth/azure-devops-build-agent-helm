@@ -23,19 +23,32 @@ spec:
       {{- end }}
       {{- if .Values.agent.dockerNodes }}
       volumes:
+        {{- if .Values.agent.dockerNodes }}
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock
             type: Socket
+        {{- end }}
+        {{- if .Values.agent.kaniko.enabled -}}
+        - name: kaniko
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-kaniko
+        {{- end }}
       {{- end }}
       containers:
       - name: linux-agent
         image: jabbermouth/ads-linux-agent:v1.0.3
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- if .Values.agent.dockerNodes }}
+        {{- if or .Values.agent.dockerNodes .Values.agent.kaniko.enabled }}
         volumeMounts:
+          {{- if .Values.agent.dockerNodes }}
           - mountPath: /var/run/docker.sock
             name: docker-sock
+          {{- end }}
+          {{- if .Values.agent.kaniko.enabled -}}
+          - mounthPath: /kaniko
+            name: kaniko
+          {{- end }}
         {{- end }}
         env:
           - name: AZP_TOKEN
@@ -51,5 +64,7 @@ spec:
             value: {{ .Values.agent.pool }}
           - name: AZP_WORK
             value: "_work"
+          - name: DEPLOYMENT_NAME
+            value: {{ .Release.Name }}
       nodeSelector:
         kubernetes.io/os: linux
