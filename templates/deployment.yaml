@@ -37,7 +37,7 @@ spec:
       {{- end }}
       containers:
       - name: linux-agent
-        image: jabbermouth/ads-linux-agent:v1.0.3
+        image: jabbermouth/ads-linux-agent:v1.0.4
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- if or .Values.agent.dockerNodes .Values.agent.kaniko.enabled }}
         volumeMounts:
