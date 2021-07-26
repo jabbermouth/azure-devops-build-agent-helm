@@ -4,11 +4,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-kaniko
   namespace: build-agents
-  annotations:
-    volume.beta.kubernetes.io/storage-class: {{ .Values.agent.kaniko.storageClass }}
   labels:
     app: {{ .Release.Name }}-kaniko
 spec:
+  storageClassName: {{ .Values.agent.kaniko.storageClass }}
   accessModes:
     - {{ .Values.agent.kaniko.accessMode }}
   resources:
