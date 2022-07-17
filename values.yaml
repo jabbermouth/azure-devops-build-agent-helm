@@ -12,4 +12,5 @@ agent:
     enabled: false
     storageClass: longhorn
     size: 5Gi
+    cacheSize: 25Gi
     accessMode: ReadWriteMany

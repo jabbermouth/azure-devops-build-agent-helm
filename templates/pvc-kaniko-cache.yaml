@@ -1,0 +1,16 @@
+{{- if .Values.agent.kaniko.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-kaniko-cache
+  namespace: build-agents
+  labels:
+    app: {{ .Release.Name }}-kaniko-cache
+spec:
+  storageClassName: {{ .Values.agent.kaniko.storageClass }}
+  accessModes:
+    - {{ .Values.agent.kaniko.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.agent.kaniko.cacheSize }}
+{{- end }}

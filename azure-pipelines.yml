@@ -7,7 +7,7 @@ resources:
     - repository: self
     - repository: deployments
       type: git
-      name: Jabbermouth.Kubernetes.Deployment.2021
+      name: jm-common-deployments
 
 stages:
 - template: helm-chart.yaml@deployments
